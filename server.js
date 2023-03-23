@@ -8,7 +8,8 @@ console.log('server :)');
 const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
-const axios = require('axios');
+const getWeather = require('./modules/weather.js');
+const getMovies = require('./modules/movies.js');
 
 // let weatherData = require('./data/weather.json');
 
@@ -47,69 +48,8 @@ app.get('/hello', (request, response) => {
 
 
 
-app.get('/weather', async (request, response, next) => {
-  // Request that is being searched
-  // response.status(200).send(`You are looking for ${queriedCity}`);
-  try {
-    // TODO: accept my queries -> /weeather?searchQuery=value
-    // let keywordFromFrontEnd = request.query.searchQuery
-    let lat = request.query.lat;
-    let lon = request.query.lon;
-    let cityInfo = request.query.searchQuery;
-
-    // console.log(request.query);
-    // TODO: find that city based on cityName - json
-    const url = `https://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WEATHER_BIT_API}&lat=${lat}&lon=${lon}&days=5`;
-
-    // https://api.weatherbit.io/v2.0/forecast/daily?key=00137711fc9848cc9aa9ccb5c852e1f0&lat=47.6062&lon=-122.3321&days=5
-
-    const weatherResults = await axios.get(url);
-    console.log(weatherResults.data.data);
-
-
-    let forecastWeather = weatherResults.data.data.map(day => {
-      let newForecast = new Forecast(day);
-      // console.log(newForecast)
-      return newForecast;
-
-    });
-    console.log(forecastWeather);
-
-
-    // TODO: send data to class to be groomed
-    response.status(200).send(forecastWeather);
-  } catch (error) {
-    next(error.message);
-  }
-});
-
-
-app.get('/movies', async (request, response, next) => {
-
-  try {
-
-    let cityInfo = request.query.searchQuery;
-    // https://api.themoviedb.org/3/search/movie?api_key=<your MOVIE DB KEY>&query=<city info from frontend>
-    // http://localhost:3001/movies?searchQuery=Seattle
-    const url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.MOVIE_API_KEY}&query=${cityInfo}`;
-    console.log(url);
-
-    const movieResults = await axios.get(url);
-    console.log(movieResults.data.results);
-
-    let movieInfo = movieResults.data.results.map(movie => new Movie(movie));
-    console.log(movieInfo);
-    response.status(200).send(movieInfo);
-
-  } catch (error) {
-    next(error.message);
-  }
-
-
-
-
-});
-
+app.get('/weather', getWeather);
+app.get('/movies', getMovies);
 
 
 
@@ -117,21 +57,6 @@ app.get('/movies', async (request, response, next) => {
 
 
 // *** CLASS TO GROOM BULKY DATA ***
-class Forecast {
-  // constructing a new object
-  constructor(day) {
-    this.date = day.valid_date;
-    this.description = day.weather.description;
-  }
-}
-
-class Movie {
-  constructor(movieObj) {
-    this.title = movieObj.title,
-    this.overview = movieObj.overview;
-  }
-}
-
 
 
 
