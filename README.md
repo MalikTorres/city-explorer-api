@@ -1,12 +1,10 @@
 # cityexplorer-api 
 
-
-
-**Author**: Your Name Goes Here
+**Author**: Malik Sadiki-Torres
 **Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
 
 ## Overview
-<!-- Provide a high level overview of what this application is and why you are building it, beyond the fact that it's an assignment for this class. (i.e. What's your problem domain?) -->
+Backend server for front end react application
 
 ## Getting Started
 <!-- What are the steps that a user must take in order to build this app on their own machine and get it running? -->
@@ -20,4 +18,16 @@
 01-01-2001 4:59pm - Application now has a fully-functional express server, with a GET route for the location resource. -->
 
 ## Credit and Collaborations
-<!-- Give credit (and a link) to other people or resources that helped you build this application. -->
+<!-- Give credit (and a link) to other people or resources that helped you build this application. --> 
+
+Name of feature: Add Cache
+
+Estimate of time needed to complete: 25 minutes
+
+Start time: 5:15 PM EST
+
+Finish time: 5:45 PM EST
+
+Actual time needed to complete: 35 minutes 
+
+![Data Flow](/img/lab10.png)
